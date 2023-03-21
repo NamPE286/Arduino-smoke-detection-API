@@ -18,11 +18,15 @@ GOOGLE_EMAIL=
 ```
 Change `EXPRESS_URL` to `127.0.0.1` for development or `0.0.0.0` for production.
 To be able to send email, you have to obtain your token via Google Cloud Platform.
+
 # Getting Arduino data
-There are two ways to get data from your Arduino, wired or wireless (via WiFi).
+
+Hook MQ2 sensor to your Arduino like this diagram
+
+<img src="https://user-images.githubusercontent.com/71075654/226717333-9024f791-bb62-4069-b672-480909f9a33a.png" width="500">
+
+There are two ways to get data from your Arduino, wired (via USB) or wireless (via WiFi or Ethernet).
 ### Wired
-Requirement:
-- Arduino UNO
 
 Upload the following code to your Arduino:
 ```C++
@@ -46,8 +50,6 @@ void loop() {
 After that, clone this repo and change `ARDUINO_PORT` in .env file. Finally, run `node index.js`. You should see `Arduino serial port initialized` message in your terminal.
 
 ### Wireless
-Requirement:
-- Arduino UNO with WiFi module
 
 Upload the following code to your Arduino:
 ```C++
