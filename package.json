@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "johnny-five": "^2.1.0",
+    "nodemailer": "^6.9.1",
+    "pocketbase": "^0.12.1",
+    "serialport": "^10.5.0"
+  }
+}
