@@ -1,5 +1,5 @@
 ﻿# Getting Started
-Before clone this repo, setup a PocketBase server first (https://pocketbase.io/docs)
+Before cloning this repo, setup a PocketBase server first (https://pocketbase.io/docs)
 After cloning, create .env file at root with the following variables:
 ```
 POCKETBASE_API_ADMIN_EMAIL=
