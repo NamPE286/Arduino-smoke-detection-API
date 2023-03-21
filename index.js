@@ -18,6 +18,13 @@ app.get('/', (req, res) => {
 
 app.get('/update/:data', (req, res) => {
     console.log(req.params.data)
+    if (arduino.isInitialized()) {
+        res.status(403)
+        return
+    }
+    const data = arduino.parseSerialJSON(req.params.data)
+    arduino.updateLastestData({ status: 0, ppm: parseInt(req.params.data) })
+    res.status(200)
     res.status(200).send({ message: 'received' })
 })
 
@@ -34,16 +41,6 @@ app.get('/100days', async (req, res) => {
 app.get('/day/:timestamp', async (req, res) => {
     const data = await require('./src/day/GET')(parseInt(req.params.timestamp))
     res.status(200).send(data)
-})
-
-app.post('/data', (req, res) => {
-    if (arduino.isInitialized()) {
-        res.status(403)
-        return
-    }
-    const data = arduino.parseSerialJSON(req.body.data)
-    arduino.updateLastestData({ status: 0, ppm: parseInt(data) })
-    res.status(200)
 })
 
 app.listen(
