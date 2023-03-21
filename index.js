@@ -48,7 +48,8 @@ app.post('/data', (req, res) => {
 
 app.listen(
     process.env.PORT,
+    process.env.EXPRESS_URL,
     () => {
-        console.log(`Server is running on http://localhost:${process.env.PORT}`)
+        console.log(`Server is running on http://${process.env.EXPRESS_URL}:${process.env.PORT}`)
     }
 )
