@@ -1,4 +1,4 @@
-﻿# Arduino-smoke-detection-API
+﻿# Getting Started
 Create .env file with following variables
 ```
 POCKETBASE_API_ADMIN_EMAIL=
