@@ -3,19 +3,19 @@ Before cloning this repo, setup a PocketBase server first (https://pocketbase.io
 
 After cloning, create .env file at root with the following variables:
 ```
-POCKETBASE_API_ADMIN_EMAIL=
+PORT=
 EXPRESS_URL=
 ARDUINO_PORT=
-OAUTH_CLIENT_SECRET=
-PORT=
-OAUTH_CLIENTID=
 ARDUINO_PATH=
 ARDUINO_MODE=
-GOOGLE_PASSWORD=
-OAUTH_REFRESH_TOKEN=
-POCKETBASE_API_ADMIN_PASSWORD=
-POCKETBASE_API_URL=
 GOOGLE_EMAIL=
+GOOGLE_PASSWORD=
+OAUTH_CLIENTID=
+OAUTH_REFRESH_TOKEN=
+OAUTH_CLIENT_SECRET=
+POCKETBASE_API_URL=
+POCKETBASE_API_ADMIN_EMAIL=
+POCKETBASE_API_ADMIN_PASSWORD=
 ```
 Change `EXPRESS_URL` to `127.0.0.1` for development or `0.0.0.0` for production.
 To be able to send email, you have to obtain your token via Google Cloud Platform.
