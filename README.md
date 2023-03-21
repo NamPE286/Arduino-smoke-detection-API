@@ -48,7 +48,7 @@ void loop() {
 	delay(1000);
 }
 ```
-After that, clone this repo and change `ARDUINO_PORT` in .env file. Finally, run `node index.js`. You should see `Arduino serial port initialized` message in your terminal.
+After that, clone this repo and change `ARDUINO_PATH` in .env file. Finally, run `node index.js`. You should see `Arduino serial port initialized` message in your terminal.
 
 ### Wireless
 
