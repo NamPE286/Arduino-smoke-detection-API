@@ -23,7 +23,6 @@ app.get('/update/:data', (req, res) => {
 
 app.get('/lastestData', async (req, res) => {
     const data = await require('./src/lastestData/GET')()
-    arduino.updateLastestData({status: 0, ppm: parseInt(data)})
     res.status(200).send(data)
 })
 
@@ -38,14 +37,13 @@ app.get('/day/:timestamp', async (req, res) => {
 })
 
 app.post('/data', (req, res) => {
-    // if(arduino.isInitialized()){
-    //     res.status(403)
-    //     return
-    // }
-    // const data = arduino.parseSerialJSON(req.body.data)
-    // arduino.updateLastestData(data)
-    // res.status(200)
-    console.log(req.body)
+    if (arduino.isInitialized()) {
+        res.status(403)
+        return
+    }
+    const data = arduino.parseSerialJSON(req.body.data)
+    arduino.updateLastestData({ status: 0, ppm: parseInt(data) })
+    res.status(200)
 })
 
 app.listen(
