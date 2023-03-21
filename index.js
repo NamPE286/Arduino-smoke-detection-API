@@ -22,7 +22,6 @@ app.get('/update/:data', (req, res) => {
         res.status(403)
         return
     }
-    const data = arduino.parseSerialJSON(req.params.data)
     arduino.updateLastestData({ status: 0, ppm: parseInt(req.params.data) })
     res.status(200)
     res.status(200).send({ message: 'received' })
