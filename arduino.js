@@ -28,8 +28,8 @@ function parseSerialJSON(data) {
 }
 
 function getState(ppm) {
-    if (ppm > 400) return 2
-    if (ppm > 250) return 1
+    if (ppm > 600) return 2
+    if (ppm > 350) return 1
     return 0
 }
 
