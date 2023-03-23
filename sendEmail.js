@@ -23,8 +23,8 @@ module.exports = (status) => {
     var mailOptions = {
         from: 'nambuihung654@gmail.com',
         to: 'buihungnam123@gmail.com',
-        subject: 'Thông báo nồng độ khói',
-        text: `Nồng độ khói hiện đang ở mức ${getState(status)}`
+        subject: 'Thông báo nguy cơ cháy nổ',
+        text: `Nguy cơ cháy nổ hiện đang ở mức ${getState(status)}`
     };
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
