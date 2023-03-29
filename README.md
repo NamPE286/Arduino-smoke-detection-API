@@ -37,10 +37,10 @@ float sensorValue = -1;
 void setup() {
 	Serial.begin(9600);
 	Serial.println("Waiting for MQ2 sensor to warmup (" + String(timeToWait) + "s)");
-  for(int i = 1; i <= timeToWait; i++){
-    delay(1000);
-  }
-  Serial.println("Ready!");
+	for(int i = 1; i <= timeToWait; i++){
+		delay(1000);
+	}
+	Serial.println("Ready!");
 }
 
 void loop() {
@@ -63,13 +63,20 @@ Upload the following code to your Arduino:
 const char* ssid = "YOUR_NETWORK_SSID"; // change this to your network ssid
 const char* password = "YOUR_NETWORK_PASSWORD"; // change this to your network password
 
-String serverName = "API_URL/update/"; // change API_URL to your deployement url
+int speakerPin = 4;
 
-unsigned long timerDelay = 2000;
+String serverName = "http://14.225.210.207:5050/update/";
 
 void setup() {
+  pinMode(4, OUTPUT);
   Serial.begin(115200);
-
+  digitalWrite(4, LOW);
+  Serial.print("Waiting for MQ2 sensor to warmup (20s)");
+  for(int i = 0; i < 20; i++){
+    Serial.print(".");
+    delay(1000);
+  }
+  Serial.println("Ready!");
   WiFi.begin(ssid, password);
   Serial.println("Connecting");
   while (WiFi.status() != WL_CONNECTED) {
@@ -79,24 +86,32 @@ void setup() {
   Serial.println("");
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
-  delay(timerDelay);
+  delay(1000);
 }
 
 void loop() {
+  int sensorValue = analogRead(0);
+  Serial.println(sensorValue);
+  if(sensorValue > 320 && sensorValue <= 600){
+    digitalWrite(4, HIGH);
+    delay(100);
+    digitalWrite(4, LOW);
+  }
+  else if(sensorValue > 600) {
+    digitalWrite(4, HIGH);
+  }
+  else {
+    digitalWrite(4, LOW);
+  }
   if (WiFi.status() == WL_CONNECTED) {
     WiFiClient client;
     HTTPClient http;
-    String serverPath = serverName + String(analogRead(0));
+    String serverPath = serverName + String(sensorValue);
     http.begin(client, serverPath.c_str());
 
     int httpResponseCode = http.GET();
 
-    if (httpResponseCode > 0) {
-      Serial.print("HTTP Response code: ");
-      Serial.println(httpResponseCode);
-      String payload = http.getString();
-      Serial.println(payload);
-    } else {
+    if (httpResponseCode <= 0) {
       Serial.print("Error code: ");
       Serial.println(httpResponseCode);
     }
@@ -104,7 +119,7 @@ void loop() {
   } else {
     Serial.println("WiFi Disconnected");
   }
-  delay(timerDelay);
+  delay(500);
 }
 ```
 After that, clone this repo and run `index.js`. You should see your terminal logging ppm value from your Arduino.
