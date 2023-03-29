@@ -1,5 +1,6 @@
 require('dotenv').config()
 const nodemailer = require('nodemailer')
+const pb = require('./pocketbase')
 
 var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -19,19 +20,25 @@ function getState(status){
     if(status == 2) return 'cao'
 }
 
-module.exports = (status) => {
-    var mailOptions = {
-        from: 'nambuihung654@gmail.com',
-        to: 'buihungnam123@gmail.com',
-        subject: 'Thông báo nguy cơ cháy nổ',
-        text: `Nguy cơ cháy nổ hiện đang ở mức ${getState(status)}`
-    };
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
+module.exports = async (status) => {
+    const emailList = await pb.collection('emails').getList(1, 50000)
+    for(const i of emailList.items){
+        console.log(`Sending email to ${i.email}...`)
+        var mailOptions = {
+            from: 'nambuihung654@gmail.com',
+            to: i.email,
+            subject: 'Thông báo nguy cơ cháy nổ',
+            text: `Nguy cơ cháy nổ hiện đang ở mức ${getState(status)}`
+        };
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+    }
+    return
+
 }
 
