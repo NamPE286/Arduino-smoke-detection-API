@@ -14,15 +14,24 @@ var transporter = nodemailer.createTransport({
     }
 });
 
-function getState(status){
-    if(status == 0) return 'thấp'
-    if(status == 1) return 'báo động'
-    if(status == 2) return 'cao'
+function getState(status) {
+    if (status == 0) return 'thấp'
+    if (status == 1) return 'báo động'
+    if (status == 2) return 'cao'
 }
 
 module.exports = async (status) => {
+    fetch(process.env.DISCORD_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            content: `Nguy cơ cháy nổ hiện đang ở mức ${getState(status)}`
+        })
+    })
     const emailList = await pb.collection('emails').getList(1, 50000)
-    for(const i of emailList.items){
+    for (const i of emailList.items) {
         console.log(`Sending email to ${i.email}...`)
         var mailOptions = {
             from: 'nambuihung654@gmail.com',
